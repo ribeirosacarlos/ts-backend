@@ -10,5 +10,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::apiResource('to-do-lists', ToDoListController::class);
-Route::apiResource('tasks', TaskController::class)->except(['index', 'show']);
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('to-do-lists', ToDoListController::class);
+    Route::apiResource('tasks', TaskController::class)->except(['index', 'show']);
+});
